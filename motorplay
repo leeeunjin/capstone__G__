@@ -1,0 +1,23 @@
+int stepPin=2;
+int dirPin=3;//방향핀 
+ 
+void setup()
+{
+ pinMode(stepPin,OUTPUT);
+ pinMode(dirPin,OUTPUT);   //값 초기화 해주는거 
+}
+
+void loop()
+{ 
+ digitalWrite(dirPin,LOW);
+ digitalWrite(stepPin,HIGH);
+ digitalWrite(stepPin,LOW);       //모터회전
+ delay(10);
+
+ digitalWrite(dirPin,HIGH);
+ digitalWrite(stepPin,HIGH);
+digitalWrite(stepPin,LOW);    //역방향회전
+ delay(10);
+
+
+}
