@@ -1,0 +1,29 @@
+package com.example.capstonedesign_g;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    public void VoiceButton(View v) {
+    Intent intent = new Intent (getApplicationContext(),VoicescreenActivity.class);
+    startActivity(intent);
+    }
+
+    public void QRbutton(View v) {}
+
+    public void NextscreenButton(View v) {
+        Intent intent = new Intent (getApplicationContext(), NovoicescreenActivity.class);
+        startActivity(intent);
+
+    }
+}
