@@ -1,0 +1,50 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial bluetooth(2, 3);  //블루투스 핀
+char data='0';//<모터에 보낼값 변수 정해준거 >
+
+void setup()  //이거는 그냥 말그래도 내가 세팅해주는 부분
+{
+  Serial.begin(9600);//통신속도 정해주는건디 보통 9600을 많이 써 그리고 시리얼모니터라는 모니터 쓸수있게 열어주는거
+
+  bluetooth.begin(9600);// 블루투스 시리얼 개방해준거
+
+  pinMode(8,OUTPUT);//<8번핀이 step 핀>인데 회전하게 하는애야 output으로 켜진건데 이건 따로보냄
+  pinMode(9,OUTPUT);// <9번핀이 dir핀> 모터 방향 정해주는애야 얘도 아웃풋
+
+  digitalWrite(8,HIGH);//CLK 모터 회전 펄스 입력
+}
+
+void loop(){//아두이노 본문같은건데 말그대로 루프에 빠지는거 
+
+  if(bluetooth.available()>0)//<만약 블루투스에 값이 들어오면>
+  {
+    data=bluetooth.read();<위에 선언한 데이터값에 블루투스에서 보낸값을 대입해>
+  }
+  switch(data){ <데이터값랑 케이스를 비교하는거>
+    case '1'://up<만약 data값이 1이면 올라간다>
+       digitalWrite(9,LOW);  //로우값이 모터에선 역방향인데 <리니어레일이 올라가>
+          for (int x=0;x<5000;x++){//오천만큼 회전을 반복하겠다 이거야 
+            digitalWrite(8,HIGH); 
+            delayMicroseconds(1000);
+            digitalWrite(8,LOW);
+            delayMicroseconds(1000);//요 네줄은 그냥 8번핀이 회전하는 애랬잖아 하이 로우 이런식으러 값주면 모터가 도는거야 그냥 모터 도는애라 생각하면 돼 
+          }
+       break; 
+     
+
+    case '2'://down<데이터값이 2가 들어오면 내려가게되는거>
+         digitalWrite(9,HIGH);//위에랑 반대로 도는거야
+          for (int x = 0; x < 5000; x++) {
+            digitalWrite(8,HIGH);
+            delayMicroseconds(1000);
+            digitalWrite(8,LOW);
+            delayMicroseconds(1000);
+          }
+          delay(1000);
+       break;
+    
+    default:
+    break;
+    }
+}
