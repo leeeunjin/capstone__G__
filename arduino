@@ -1,0 +1,38 @@
+// 블루투스 + 적외선센서
+
+#include <SoftwareSerial.h>
+
+SoftwareSerial bluetooth(8, 9);
+int S=2;
+int LED=4;
+int val;
+
+void setup() {
+  Serial.begin(9600);
+  bluetooth.begin(9600);
+  pinMode(S, INPUT);
+  pinMode(LED, OUTPUT);
+}
+void loop() {
+  if (bluetooth.available()){
+    Serial.write(bluetooth.read());
+  }
+  if (Serial.available()){
+    bluetooth.write(Serial.read());
+  } //블루투스
+  
+  val=digitalRead(S);
+  
+  if(val == HIGH) {
+    Serial.println("ON");
+    bluetooth.println("soundOn");
+    digitalWrite(LED, HIGH);
+  }
+
+  else {
+    Serial.print(".");
+    digitalWrite(LED, LOW);
+  }
+
+ delay(1000);
+}
